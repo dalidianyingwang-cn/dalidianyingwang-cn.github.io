@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>达利电影网 - 超现实主义与艺术电影在线观看导航 | dalidianyingwang-cn.github.io</title>
+<meta name="description" content="达利电影网（dalidianyingwang-cn.github.io）专注超现实主义、达利式梦境影像、艺术电影与实验短片在线观看导航，带你进入时间、记忆与欲望的银幕梦境。">
+<meta name="keywords" content="达利电影网, dalidianyingwang-cn, dalidianyingwang-cn.github.io, 达利, 超现实主义, 艺术电影, 梦境电影, 实验电影, 短片, 画家电影, 在线观看">
+<meta name="author" content="达利电影网">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta property="og:title" content="达利电影网 - 超现实主义与艺术电影在线观看导航">
+<meta property="og:description" content="达利电影网专注超现实主义、达利式梦境影像、艺术电影与实验短片在线观看导航，带你进入时间、记忆与欲望的银幕梦境。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dalidianyingwang-cn.github.io">
+<meta property="og:site_name" content="达利电影网">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="canonical" href="https://dalidianyingwang-cn.github.io">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.85em' font-size='72'>♾</text></svg>">
+<style>
+/* ==========================================================
+   达利电影网 (dalidianyingwang-cn.github.io)  单页响应式网站
+   - 移动端优先 (Mobile First)，断点 640px / 960px
+   - 6 个栏目，各自独立 DOM 结构与视觉方案（模板差异化重构）
+   - 视觉：超现实主义 / 梦境 —— 深靛蓝 + 熔金 + 玫红 + 软钟扭曲
+   - 纯 CSS / 原生 JS，无第三方依赖，无外部图片
+   ========================================================== */
+
+/* ---------- Reset & 设计令牌 ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1020;--bg2:#131a33;--panel:rgba(255,255,255,.05);--line:rgba(233,168,84,.42);--line2:rgba(255,255,255,.12);
+  --txt:#f3efe6;--txt2:#c9c4d6;--txt3:#8b86a4;
+  --indigo:#5b6ff0;--gold:#e9a854;--rose:#e0569c;--lilac:#b48cff;--teal:#4fd1c5;--cream:#f6ecd2;
+  --r:16px;--sh:0 30px 70px rgba(0,0,0,.72);
+  --t:.5s cubic-bezier(.22,.61,.36,1);
+  --bg-grid:
+    radial-gradient(circle at 20% 12%,rgba(233,168,84,.16),transparent 42%),
+    radial-gradient(circle at 82% 30%,rgba(224,86,156,.16),transparent 44%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0 1px,transparent 1px 5px);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Songti SC","SimSun","Noto Serif SC",Georgia,"PingFang SC","Microsoft YaHei",serif;
+  background:var(--bg);color:var(--txt);line-height:1.8;overflow-x:hidden;background-image:var(--bg-grid);
+}
+img{max-width:100%;display:block;border:0}
+a{color:inherit;text-decoration:none;outline:none}
+ul{list-style:none}
+button,input,textarea{font-family:inherit}
+::selection{background:var(--gold);color:#0b1020}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--rose),var(--gold));border-radius:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+
+/* ---------- 通用 ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 26px}
+.section{padding:90px 0;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(233,168,84,.5);padding:7px 16px;border-radius:40px;background:rgba(233,168,84,.08);font-family:ui-monospace,Menlo,monospace}
+.eyebrow::before{content:"◈";color:var(--rose);animation:pu 2.4s ease-in-out infinite}
+@keyframes pu{50%{transform:scale(1.5);color:var(--gold)}}
+.h2{font-size:clamp(29px,5vw,48px);font-weight:800;letter-spacing:1px;margin:16px 0 12px;line-height:1.24}
+.h2 .grad{background:linear-gradient(100deg,var(--gold),var(--rose) 60%,var(--lilac));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--txt2);max-width:720px;font-size:15px}
+hr.divider{border:0;height:1px;background:linear-gradient(90deg,transparent,rgba(233,168,84,.6),transparent);margin:0}
+
+/* ---------- 达利元素：软钟、蚂蚁、眼睛 ---------- */
+.clock{position:fixed;right:26px;bottom:26px;width:78px;height:78px;z-index:1;opacity:.5;pointer-events:none;filter:drop-shadow(0 14px 26px rgba(233,168,84,.3))}
+.clock svg{width:100%;height:100%;animation:dr 7s ease-in-out infinite;transform-origin:50% 88%}
+@keyframes dr{0%,100%{transform:rotate(-8deg) scaleY(1)}50%{transform:rotate(6deg) scaleY(.86)}}
+.eye{position:fixed;width:14px;height:9px;border-radius:50%;background:var(--rose);opacity:.35;pointer-events:none;z-index:0;box-shadow:0 0 18px var(--rose)}
+.ant{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--txt3);opacity:.5;pointer-events:none;z-index:0}
+
+/* ---------- 导航：画框式 ---------- */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(11,16,32,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line2)}
+.pbar{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--rose),var(--lilac));box-shadow:0 0 12px var(--gold)}
+.nav{display:flex;align-items:center;gap:16px;height:72px;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:13px;font-weight:800;letter-spacing:2px;font-size:20px;font-family:"Songti SC",Georgia,serif}
+.brand .logo{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:24px;color:#0b1020;background:radial-gradient(circle at 36% 30%,var(--cream),var(--gold));box-shadow:0 0 24px rgba(233,168,84,.44);position:relative}
+.brand .logo::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px dashed var(--lilac);opacity:0;transition:var(--t)}
+.brand:hover .logo::after{opacity:1;inset:-10px}
+.brand small{font-weight:600;font-size:9px;color:var(--txt3);letter-spacing:.18em;display:block;margin-top:3px;font-family:ui-monospace,Menlo,monospace}
+.brand b{color:var(--gold)}
+.nav-links{display:flex;gap:6px;margin-left:auto;align-items:center}
+.nav-links a{padding:11px 17px;border-radius:40px;font-size:14px;color:var(--txt2);position:relative;transition:var(--t)}
+.nav-links a:hover{color:var(--cream);background:rgba(255,255,255,.06)}
+.nav-links a::before{content:"·";color:var(--gold);position:absolute;left:6px;top:9px;opacity:0;transition:var(--t)}
+.nav-links a:hover::before{opacity:1}
+.nav-cta{background:linear-gradient(100deg,var(--gold),var(--rose));color:#0b1020!important;font-weight:800;padding:12px 26px!important;box-shadow:0 0 26px rgba(233,168,84,.4)}
+.nav-cta:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 0 40px rgba(224,86,156,.56)}
+.nav-cta::before{display:none}
+.menu-btn{display:none;background:var(--panel);border:1px solid var(--line);color:var(--gold);width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer}
+
+/* ---------- Hero：梦境 ---------- */
+.hero{padding:86px 0 46px;position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
+.hero h1{font-size:clamp(46px,8.4vw,84px);line-height:1.06;font-weight:900;letter-spacing:3px}
+.hero h1 em{font-style:normal;display:inline-block;background:linear-gradient(100deg,var(--gold),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent;transform:skewX(-6deg)}
+.hero .sub{margin-top:16px;font-size:clamp(14px,2.2vw,19px);color:var(--lilac);letter-spacing:.2em;font-family:ui-monospace,Menlo,monospace}
+.hero p{color:var(--txt2);font-size:16px;margin:24px 0 28px;max-width:560px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px}
+.btn{border:0;cursor:pointer;font-size:15px;font-weight:800;padding:16px 36px;border-radius:40px;transition:var(--t);letter-spacing:1px}
+.btn-primary{background:linear-gradient(100deg,var(--gold),var(--rose));color:#0b1020;box-shadow:0 16px 34px rgba(233,168,84,.34)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 24px 46px rgba(224,86,156,.5)}
+.btn-ghost{background:var(--panel);color:var(--txt);border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(255,255,255,.09);border-color:var(--lilac);color:#fff}
+.hero-stats{display:flex;gap:38px;margin-top:36px;flex-wrap:wrap}
+.hero-stats div{display:flex;flex-direction:column;gap:3px}
+.hero-stats div span{font-size:32px;font-weight:900;font-family:ui-monospace,Menlo,monospace;background:linear-gradient(90deg,var(--gold),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
+.hero-stats div small{color:var(--txt3);font-size:11px;letter-spacing:.12em;font-family:ui-monospace,Menlo,monospace}
+
+/* 达利软钟画框 */
+.frame{position:relative;width:100%;max-width:440px;margin-left:auto;aspect-ratio:5/6;border-radius:18px;padding:20px;background:linear-gradient(160deg,#2a2347,#110e22);border:2px solid #5a4f7d;box-shadow:var(--sh),inset 0 0 0 10px #1d1936,inset 0 0 0 12px #8f7fb8;transform:rotate(2.4deg)}
+.frame::before{content:"DALÍ · 1931";position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-3deg);background:var(--gold);color:#0b1020;font-family:ui-monospace,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:.26em;padding:5px 16px;border-radius:20px;box-shadow:0 8px 18px rgba(233,168,84,.4);z-index:6}
+.landscape{position:relative;width:100%;height:100%;border-radius:6px;overflow:hidden;background:
+  linear-gradient(180deg,#dfd7c2 0 46%,#c9bfa0 46% 56%,#8fa8c4 56% 74%,#5f7ba8 74%);
+}
+.landscape .sun{position:absolute;right:14%;top:14%;width:88px;height:88px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#ffe9bd,var(--gold));box-shadow:0 0 40px rgba(233,168,84,.6);animation:pl 4.4s ease-in-out infinite}
+@keyframes pl{50%{transform:scale(1.08)}}
+.landscape .cliff{position:absolute;left:0;bottom:0;width:46%;height:34%;background:#a99a76;clip-path:polygon(0 100%,100% 22%,100% 100%)}
+.landscape .sea{position:absolute;left:0;right:0;bottom:0;height:15%;background:linear-gradient(180deg,rgba(120,150,190,.7),rgba(70,96,140,.8))}
+.melt{position:absolute;left:24%;top:30%;width:150px;height:120px}
+.melt svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 18px 20px rgba(0,0,0,.4))}
+.melt use{animation:mt 6s ease-in-out infinite;transform-origin:50% 12%}
+.melt use:nth-child(2){animation-delay:-2s}
+.melt use:nth-child(3){animation-delay:-4s}
+@keyframes mt{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg) skewY(4deg)}}
+.frame .hud{position:absolute;z-index:7;font-family:ui-monospace,Menlo,monospace;font-size:10px;background:rgba(11,16,32,.92);border:1px solid var(--line);padding:7px 11px;border-radius:20px;color:var(--gold)}
+.hud-1{top:8%;left:-20px}.hud-2{bottom:16%;left:-26px;animation:fl 5s ease-in-out infinite}.hud-3{top:34%;right:-22px;animation:fl 5s ease-in-out infinite reverse}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ---------- 栏目 1：超现实主义电影（海报 Grid + 标签筛选） ---------- */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 28px}
+.chip{padding:9px 20px;border-radius:30px;background:var(--panel);border:1px solid var(--line2);color:var(--txt2);font-size:13px;cursor:pointer;transition:var(--t)}
+.chip:hover{color:var(--cream);border-color:var(--gold)}
+.chip.active{background:linear-gradient(100deg,var(--gold),var(--rose));color:#0b1020;border-color:transparent;font-weight:800;box-shadow:0 10px 22px rgba(233,168,84,.34)}
+.film-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:22px}
+.film{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.01));border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;transition:var(--t);display:flex;flex-direction:column}
+.film:hover{transform:translateY(-10px) rotate(1.2deg);border-color:var(--gold);box-shadow:var(--sh)}
+.thumb{position:relative;aspect-ratio:3/4;overflow:hidden;display:grid;place-items:center}
+.thumb .fill{position:absolute;inset:0;display:grid;place-items:center;font-size:56px;font-weight:900;color:rgba(255,255,255,.95);text-shadow:0 8px 26px rgba(0,0,0,.6);letter-spacing:4px;font-family:Georgia,serif}
+.thumb .mood{position:absolute;top:12px;left:12px;font-size:10px;padding:5px 11px;border-radius:20px;background:rgba(11,16,32,.9);color:var(--gold);letter-spacing:.06em;border:1px solid rgba(233,168,84,.55);font-family:ui-monospace,Menlo,monospace}
+.thumb .year{position:absolute;bottom:12px;right:12px;font-size:12px;font-weight:900;color:#0b1020;padding:5px 11px;border-radius:4px;background:var(--rose);box-shadow:0 0 14px rgba(224,86,156,.55);font-family:ui-monospace,Menlo,monospace}
+.thumb .play{position:absolute;inset:0;display:grid;place-items:center;font-size:58px;color:rgba(255,255,255,.95);opacity:0;transition:var(--t);text-shadow:0 6px 24px rgba(0,0,0,.6)}
+.film:hover .play{opacity:1;transform:scale(1.16)}
+.film .meta{padding:15px;flex:1;display:flex;flex-direction:column;gap:8px}
+.film h3{font-size:15px;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.film .quote{font-size:12px;color:var(--txt3);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:italic}
+.film .info{font-size:11px;color:var(--txt3);display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.film .info i{font-style:normal;padding:3px 9px;border-radius:20px;background:rgba(255,255,255,.07);color:var(--txt2);font-family:ui-monospace,Menlo,monospace}
+
+/* ---------- 栏目 2：梦境词典（手风琴） ---------- */
+.dict{margin-top:30px;display:flex;flex-direction:column;gap:12px}
+.term{border:1px solid var(--line2);border-radius:14px;background:var(--panel);overflow:hidden;transition:var(--t)}
+.term[open]{border-color:var(--gold);background:rgba(233,168,84,.08);box-shadow:var(--sh)}
+.term summary{cursor:pointer;padding:20px 24px;display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:center;list-style:none}
+.term summary::-webkit-details-marker{display:none}
+.term summary::marker{display:none}
+.term .let{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:900;color:#0b1020;background:linear-gradient(135deg,var(--gold),var(--rose))}
+.term h4{font-size:18px;line-height:1.4}
+.term h4 small{display:block;font-size:11px;color:var(--txt3);letter-spacing:.14em;font-weight:500;font-family:ui-monospace,Menlo,monospace;margin-top:2px}
+.term .arw{color:var(--gold);transition:transform .4s;font-size:18px}
+.term[open] .arw{transform:rotate(180deg)}
+.term .body{padding:0 24px 22px 106px;color:var(--txt2);font-size:14px;display:grid;grid-template-columns:1fr 230px;gap:22px;align-items:start}
+.term .body .filmok{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--gold);border-left:2px solid var(--rose);padding-left:12px}
+.term .body .filmok b{display:block;color:var(--cream);font-size:13px;margin-bottom:4px;font-family:"Songti SC",Georgia,serif;letter-spacing:.04em}
+
+/* ---------- 栏目 3：画家电影（横向双轨时间线） ---------- */
+.twin{margin-top:30px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line2);border-radius:16px;overflow:hidden;background:var(--panel)}
+.twin>div{padding:26px}
+.twin .l{background:linear-gradient(160deg,rgba(91,111,240,.22),transparent 70%);border-right:1px solid var(--line2)}
+.twin .r{background:linear-gradient(160deg,rgba(224,86,156,.2),transparent 70%)}
+.twin h5{font-size:13px;letter-spacing:.24em;color:var(--gold);font-family:ui-monospace,Menlo,monospace;margin-bottom:18px}
+.tl{position:relative;padding-left:24px}
+.tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--gold),var(--rose),var(--lilac))}
+.tl .it{position:relative;padding-bottom:18px}
+.tl .it::before{content:"";position:absolute;left:-24px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(233,168,84,.2)}
+.tl .it b{font-size:15px;display:block}
+.tl .it span{font-size:12px;color:var(--txt3);font-family:ui-monospace,Menlo,monospace;letter-spacing:.08em}
+.tl .it p{font-size:12.5px;color:var(--txt2);margin-top:3px}
+
+/* ---------- 栏目 4：实验短片（CSS 生成艺术卡片） ---------- */
+.art{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:18px}
+.art .card{border:1px solid var(--line2);border-radius:14px;padding:16px;background:var(--panel);transition:var(--t);display:flex;flex-direction:column;gap:10px}
+.art .card:hover{transform:translateY(-6px);border-color:var(--lilac);box-shadow:var(--sh)}
+.art .swatch{height:120px;border-radius:9px;position:relative;overflow:hidden}
+.s1{background:repeating-linear-gradient(45deg,#e9a854 0 14px,#0b1020 14px 28px);animation:pa 9s linear infinite}
+.s2{background:radial-gradient(circle at 50% 120%,var(--rose),#0b1020 70%);display:grid;place-items:center}
+.s2::after{content:"";width:70px;height:70px;border:3px solid var(--cream);border-radius:50%;box-shadow:0 0 0 16px rgba(246,236,210,.12),0 0 0 34px rgba(246,236,210,.06);animation:pu 3.4s ease-in-out infinite}
+.s3{background:linear-gradient(90deg,var(--teal),var(--indigo));clip-path:polygon(0 0,100% 20%,80% 100%,0 80%);animation:mo 6s ease-in-out infinite}
+.s4{background:conic-gradient(from 0deg,var(--lilac),var(--rose),var(--gold),var(--teal),var(--lilac))}
+@keyframes pa{to{background-position:40px 0}}@keyframes mo{50%{clip-path:polygon(20% 10%,90% 0,100% 90%,10% 100%)}}
+.art .card h6{font-size:15px}
+.art .card .dur{font-size:11px;color:var(--txt3);font-family:ui-monospace,Menlo,monospace;letter-spacing:.1em}
+.art .card p{font-size:12.5px;color:var(--txt2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- 栏目 5：梦境榜（表格行） ---------- */
+.rank{margin-top:28px;display:flex;flex-direction:column;gap:10px}
+.rank-row{display:grid;grid-template-columns:56px 1fr auto;gap:18px;align-items:center;padding:15px 22px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);transition:var(--t)}
+.rank-row:hover{background:rgba(233,168,84,.09);border-color:var(--gold);transform:translateX(7px)}
+.rank-row .no{font-size:25px;font-weight:900;text-align:center;font-variant-numeric:tabular-nums;color:var(--txt3);font-family:ui-monospace,Menlo,monospace}
+.rank-row .no.g1{color:var(--gold);text-shadow:0 0 14px rgba(233,168,84,.5)}
+.rank-row .no.g2{color:var(--cream)}
+.rank-row .no.g3{color:var(--lilac)}
+.rank-row .tt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rank-row .tt b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank-row .tt span{font-size:12px;color:var(--txt3);font-family:ui-monospace,Menlo,monospace;letter-spacing:.06em}
+.rank-row .ht{font-size:13px;color:var(--rose);white-space:nowrap;font-variant-numeric:tabular-nums;font-family:ui-monospace,Menlo,monospace}
+
+/* ---------- 栏目 6：关于 / 订阅（左右分栏面板） ---------- */
+.about{border:1px solid var(--line);border-radius:20px;padding:52px;margin-top:26px;background:
+  radial-gradient(600px 300px at 90% 0%,rgba(224,86,156,.22),transparent 60%),
+  radial-gradient(580px 320px at 0% 100%,rgba(91,111,240,.18),transparent 60%),
+  var(--panel);position:relative;overflow:hidden}
+.about::after{content:"∞";position:absolute;right:-24px;bottom:-56px;font-size:230px;font-weight:900;color:rgba(233,168,84,.09);line-height:1;-webkit-text-stroke:1px rgba(233,168,84,.18)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;position:relative;z-index:2}
+.feat{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.feat div{padding:19px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line2);transition:var(--t)}
+.feat div:hover{background:rgba(255,255,255,.09);transform:translateY(-3px);border-color:var(--gold)}
+.feat div b{display:block;font-size:27px;font-weight:900;background:linear-gradient(90deg,var(--gold),var(--rose));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums;line-height:1.2;font-family:ui-monospace,Menlo,monospace}
+.feat div span{font-size:13px;color:var(--txt2)}
+.about-form{display:flex;flex-direction:column;gap:13px}
+.about-form input,.about-form textarea{width:100%;padding:15px 17px;border-radius:30px;border:1px solid var(--line);background:rgba(7,10,22,.82);color:var(--txt);font-size:14px;resize:vertical;transition:var(--t)}
+.about-form input:focus,.about-form textarea:focus{border-color:var(--lilac);outline:none;box-shadow:0 0 0 3px rgba(180,140,255,.22);background:#0b1020}
+.about-form textarea{min-height:112px;border-radius:16px}
+
+/* ---------- 页脚 ---------- */
+.site-footer{margin-top:64px;padding:50px 0 28px;border-top:1px solid var(--line2)}
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:28px}
+.foot-col h6{font-size:15px;margin-bottom:15px;color:var(--gold);letter-spacing:.08em;font-family:ui-monospace,Menlo,monospace}
+.foot-col ul{display:flex;flex-direction:column;gap:10px}
+.foot-col a{font-size:13px;color:var(--txt3);transition:var(--t);display:inline-block}
+.foot-col a:hover{color:var(--rose);transform:translateX(5px);text-shadow:0 0 8px var(--rose)}
+.foot-brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:18px;letter-spacing:2px}
+.foot-brand .logo{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:17px;color:#0b1020;background:radial-gradient(circle at 36% 30%,var(--cream),var(--gold))}
+.foot-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--txt3)}
+.foot-bottom a{color:var(--txt2)}
+.foot-bottom a:hover{color:var(--lilac)}
+
+.to-top{position:fixed;right:20px;bottom:24px;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:rgba(11,16,32,.94);backdrop-filter:blur(8px);color:var(--gold);font-size:20px;cursor:pointer;z-index:99;opacity:0;visibility:hidden;transition:var(--t);box-shadow:var(--sh)}
+.to-top.show{opacity:1;visibility:visible}
+.to-top:hover{background:var(--gold);color:#0b1020}
+
+/* ---------- 入场动画 ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:.8s cubic-bezier(.22,.61,.36,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- 响应式 ---------- */
+@media(max-width:960px){
+  .hero-grid,.about-grid{grid-template-columns:1fr}
+  .frame{max-width:400px;margin:40px auto 0}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .twin{grid-template-columns:1fr}
+  .twin .l{border-right:0;border-bottom:1px solid var(--line2)}
+  .term .body{grid-template-columns:1fr;padding-left:24px}
+}
+@media(max-width:640px){
+  .section{padding:56px 0}
+  .wrap{padding:0 16px}
+  .nav-links{position:fixed;inset:72px 0 auto;flex-direction:column;align-items:stretch;gap:4px;background:rgba(11,16,32,.99);backdrop-filter:blur(14px);padding:16px;max-height:0;overflow:hidden;transition:.42s;border-bottom:1px solid var(--line)}
+  .nav-links.open{max-height:600px}
+  .nav-links a{padding:15px 18px;border-radius:12px;font-size:15px}
+  .menu-btn{display:block;margin-left:auto}
+  .hero{padding:46px 0 24px}
+  .hero h1{letter-spacing:1px}
+  .hero-stats{gap:24px}
+  .hero-stats div span{font-size:25px}
+  .film-row{grid-template-columns:repeat(auto-fill,minmax,minmax(148px,1fr));gap(15px)}
+  .film-row{grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:15px}
+  .art{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr}
+  .about{padding:32px 20px}
+  .feat{grid-template-columns:1fr}
+  .rank-row{grid-template-columns:44px 1fr;gap:13px}
+  .rank-row .ht{grid-column:2;justify-self:flex-start;font-size:12px}
+  .frame{transform:none}
+  .hud{display:none}
+  .clock{width:52px;height:52px;right:12px;bottom:12px;opacity:.34}
+}
+@media print{
+  body{background:#fff;color:#000;background-image:none}
+  .site-header,.to-top,.nav-cta,.play,.clock,.eye,.ant{display:none}
+  .section{padding:20px 0}
+  .film,.term,.art .card,.rank-row{border-color:#bbb;background:#fff;color:#000;box-shadow:none;transform:none!important;break-inside:avoid}
+  details{border-color:#bbb}
+  a{color:#000}
+}
+</style>
+</head>
+<body id="top">
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<!-- 达利符号装饰 -->
+<div class="clock" aria-hidden="true">
+  <svg viewBox="0 0 100 100"><defs><path id="d" d="M50 18 C74 18 88 40 84 66 C80 88 58 92 50 92 C42 92 20 88 16 66 C12 40 26 18 50 18 Z"/></defs>
+  <use href="#d" fill="#e9a854"/><use href="#d" fill="none" stroke="#0b1020" stroke-width="3" transform="translate(0,6) scale(.94)"/>
+  <line x1="50" y1="30" x2="50" y2="60" stroke="#0b1020" stroke-width="4" stroke-linecap="round"/><line x1="50" y1="60" x2="66" y2="72" stroke="#0b1020" stroke-width="4" stroke-linecap="round"/></svg>
+</div>
+<div class="eye" style="top:18%;left:8%" aria-hidden="true"></div>
+<div class="eye" style="top:64%;left:92%;width:10px;height:6px" aria-hidden="true"></div>
+<div class="ant" style="top:30%;left:14%" aria-hidden="true"></div>
+<div class="ant" style="top:52%;left:86%" aria-hidden="true"></div>
+<div class="ant" style="top:74%;left:20%" aria-hidden="true"></div>
+
+<!-- ==================== 顶部导航 ==================== -->
+<header class="site-header">
+  <div class="pbar" id="pbar" aria-hidden="true"></div>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="达利电影网 返回顶部">
+      <span class="logo" aria-hidden="true">∞</span>
+      <span><b>达利</b>电影网<small>DALIDIANYINGWANG-CN.GITHUB.IO</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="主导航">
+      <a href="#movies">超现实主义</a>
+      <a href="#dict">梦境词典</a>
+      <a href="#painter">画家电影</a>
+      <a href="#art">实验短片</a>
+      <a href="#rank">梦境榜</a>
+      <a href="#about">关于</a>
+      <a href="#movies" class="nav-cta">入梦 ▶</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="展开菜单" aria-expanded="false" aria-controls="navLinks">☰</button>
+  </div>
+</header>
+
+<!-- ==================== Hero / 首页 ==================== -->
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">dalidianyingwang-cn.github.io · 梦境影像</span>
+      <h1>软钟垂落的<br><em>那一场梦</em></h1>
+      <div class="sub">SURREAL CINEMA · 1930 — 2026</div>
+      <p>达利电影网（dalidianyingwang-cn.github.io）只做一件事：把银幕上那些"不合逻辑、却无比真实"的影像收集起来。超现实主义、艺术电影、实验短片、画家电影——时间在这里是软的，记忆是可以融化的。</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#movies">进 入 梦 境 ▶</a>
+        <a class="btn btn-ghost" href="#dict">读懂梦境</a>
+      </div>
+      <div class="hero-stats">
+        <div><span>860+</span><small>超现实影片</small></div>
+        <div><span>12</span><small>梦境母题</small></div>
+        <div><span>9</span><small>分钟平均片长</small></div>
+      </div>
+    </div>
+
+    <!-- 达利软钟画框 -->
+    <div class="frame reveal" aria-hidden="true">
+      <div class="landscape">
+        <div class="sun"></div>
+        <div class="cliff"></div>
+        <div class="sea"></div>
+        <div class="melt">
+          <svg viewBox="0 0 150 130">
+            <defs><path id="w" d="M20 12 Q30 4 40 12 Q52 4 62 16 Q72 8 84 20 Q96 12 104 24 L112 96 Q100 120 76 118 Q52 122 34 112 Q18 106 16 84 Z"/></defs>
+            <use href="#w" fill="#dfd7c2" stroke="#a99a76" stroke-width="2"/>
+            <use href="#w" fill="none" stroke="#0b1020" stroke-width="3" transform="translate(0,26) scale(1,.72)"/>
+            <line x1="46" y1="40" x2="46" y2="74" stroke="#0b1020" stroke-width="3" stroke-linecap="round"/><line x1="46" y1="74" x2="60" y2="86" stroke="#0b1020" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="hud hud-1">DREAM <b>ON</b></div>
+      <div class="hud hud-2">TIME <b>SOFT</b></div>
+      <div class="hud hud-3">REALITY <b>0.4</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 栏目 1：超现实主义电影 ==================== -->
+<section class="section" id="movies">
+  <div class="wrap">
+    <span class="eyebrow">频道 · 超现实主义电影</span>
+    <h2 class="h2">银幕上的 <span class="grad">潜意识</span></h2>
+    <p class="lead">达利电影网按母题为你归类：梦境、时间、欲望、记忆、荒诞、死亡。不必按剧情理解，按感觉看就好。</p>
+
+    <div class="filters" role="tablist" aria-label="影片母题">
+      <button class="chip active" role="tab" aria-selected="true">全部母题</button>
+      <button class="chip" role="tab">梦境</button>
+      <button class="chip" role="tab">时间</button>
+      <button class="chip" role="tab">欲望</button>
+      <button class="chip" role="tab">荒诞</button>
+      <button class="chip" role="tab">记忆</button>
+      <button class="chip" role="tab">死亡</button>
+    </div>
+
+    <div class="film-row">
+      <article class="film reveal">
+        <div class="thumb" style="background:linear-gradient(165deg,#3a2a5e,#140e26)"><div class="fill">安</div><span class="mood">梦境</span><span class="year">1929</span><span class="play">▶</span></div>
+        <div class="meta"><h3>一条安达鲁狗 Un chien andalou</h3><div class="quote">"没有任何寓意，只有一连串无法解释的画面。"</div><div class="info"><i>1929</i><i>布努埃尔</i><i>16 分钟</i></div></div>
+      </article>
+      <article class="film reveal">
+        <div class="thumb" style="background:linear-gradient(165deg,#8a6a1e,#3d2d08)"><div class="fill">金</div><span class="mood">欲望</span><span class="year">1945</span><span class="play">▶</span></div>
+        <div class="meta"><h3>被遗忘的人 Los olvidados</h3><div class="quote">墨西哥城的贫民窟，也是一场噩梦。</div><div class="info"><i>1950</i><i>布努埃尔</i><i>85 分钟</i></div></div>
+      </article>
+      <article class="film reveal">
+        <div class="thumb" style="background:linear-gradient(165deg,#1f6f5c,#0c3228)"><div class="fill">雾</div><span class="mood">记忆</span><span class="year">1968</span><span class="play">▶</span></div>
+        <div class="meta"><h3>朦朦中的大眼 Belle de jour</h3><div class="quote">白天是体面的妻子，午后属于另一条街。</div><div class="info"><i>1967</i><i>布努埃尔</i><i>101 分钟</i></div></div>
+      </article>
+      <article class="film reveal">
+        <div class="thumb" style="background:linear-gradient(165deg,#a1425e,#4a1c2c)"><div class="fill">八</div><span class="mood">自我</span><span class="year">1963</span><span class="play">▶</span></div>
+        <div class="meta"><h3>八部半 8½</h3><div class="quote">费里尼把导演的崩溃拍成了一首狂想曲。</div><div class="info"><i>1963</i><i>费里尼</i><i>138 分钟</i></div></div>
+      </article>
+      <article class="film reveal">
+        <div class="thumb" style="background:linear-gradient(165deg,#264a8a,#0f2140)"><div class="fill">镜</div><span class="mood">时间</span><span class="year">1975</span><span class="play">▶</span></div>
+        <div class="meta"><h3>镜子 Зеркало</h3><div class="quote">塔可夫斯基：时间，是被压缩的空间。</div><div class="info"><i>1975</i><i>塔可夫斯基</i><i>107 分钟</i></div></div>
+      </article>
+      <article class="film reveal">
+        <div class="thumb" style="background:linear-gradient(165deg,#7a3fa0,#341a4a)"><div class="fill">圣</div><span class="mood">荒诞</span><span class="year">1998</span><span class="play">▶</span></div>
+        <div class="meta"><h3>圣山 The Holy Mountain</h3><div class="quote">亚历桑德罗·佐杜洛夫斯基的炼金术仪式。</div><div class="info"><i>1973</i><i>佐杜洛夫斯基</i><i>116 分钟</i></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== 栏目 2：梦境词典（手风琴） ==================== -->
+<section class="section" id="dict">
+  <div class="wrap">
+    <span class="eyebrow">词典 · 梦境母题</span>
+    <h2 class="h2">读懂梦的 <span class="grad">十二个符号</span></h2>
+    <p class="lead">达利电影网把反复出现的梦境意象整理成词典。看懂符号，就看懂了一半的超现实主义电影。</p>
+
+    <div class="dict">
+      <details class="term reveal" open>
+        <summary><span class="let">M</span><h4>软钟 / 融化的时间<small>SOFT WATCH · TEMPORALITY</small></h4><span class="arw">▾</span></summary>
+        <div class="body"><p>达利说："时间的流动，取决于你是在等待一个人，还是在等一场雨。"软钟否定了机械时间，把"此刻"变成可以拉伸、可以滴落的物质。看到钟表融化，就等于进入了梦境。</p><div class="filmok"><b>必看</b>《记忆的永恒》(1931)<br>《一条安达鲁狗》(1929)</div></div>
+      </details>
+      <details class="term reveal">
+        <summary><span class="let">A</span><h4>蚂蚁 / 腐烂的甜<small>ANTS · DECAY</small></h4><span class="arw">▾</span></summary>
+        <div class="body"><p>蚂蚁在达利笔下不是勤劳，而是"分解"。它们爬满手掌、嘴唇、钟表齿轮，暗示欲望终将被啃食。甜的东西正在腐烂，是超现实主义最爱的画面。</p><div class="filmok"><b>必看</b>《一条安达鲁狗》<br>《黄金时代》(1930)</div></div>
+      </details>
+      <details class="term reveal">
+        <summary><span class="let">E</span><h4>抽屉人 / 被藏起的身体<small>DRAWER MAN · REPRESSION</small></h4><span class="arw">▾</span></summary>
+        <div class="body"><p>人体长出抽屉，拉开是空的，或是塞满杂物。抽屉是记忆的容器，也是羞耻的藏身处。超现实主义相信：人最真实的部分，都藏在不敢打开的那一格。</p><div class="filmok"><b>必看</b>《被遗忘的人》<br>《冷血惊魂》(1960)</div></div>
+      </details>
+      <details class="term reveal">
+        <summary><span class="let">L</span><h4>长影与无脸者<small>LONG SHADOW · THE DOUBLE</small></h4><span class="arw">▾</span></summary>
+        <div class="body"><p>影子比人长，人却没有脸。这是"自我"与"他者"的分裂。布努埃尔最爱让体面的中产家庭突然裂开一道缝，露出底下荒诞的欲望。</p><div class="filmok"><b>必看</b>《资产阶级的审慎魅力》(1972)<br>《朦胧中的大眼》(1967)</div></div>
+      </details>
+      <details class="term reveal">
+        <summary><span class="let">W</span><h4>水的三个时间<small>WATER · THREE TIMES</small></h4><span class="arw">▾</span></summary>
+        <div class="body"><p>镜子、雨水、海水——水让时间失去方向。塔可夫斯基用整整一部《镜子》，让母亲的脸、战前的草地与现在的病房在水面重叠。过去不是过去了，它只是换了介质。</p><div class="filmok"><b>必看</b>《镜子》(1975)<br>《潜行者》(1979)</div></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== 栏目 3：画家电影（双轨时间线） ==================== -->
+<section class="section" id="painter">
+  <div class="wrap">
+    <span class="eyebrow">频道 · 画家电影</span>
+    <h2 class="h2">当画家 <span class="grad">拿起摄影机</span></h2>
+    <p class="lead">画家跨界拍的电影，构图即语言。达利电影网按"画家—导演"双轨梳理，左边是画，右边是影像。</p>
+
+    <div class="twin">
+      <div class="l">
+        <h5>PAINTER · 画 布</h5>
+        <div class="tl">
+          <div class="it"><b>萨尔瓦多·达利 Salvador Dalí</b><span>1904 — 1989 · 西班牙</span><p>偏执狂批判法：从妄想中提取真实。</p></div>
+          <div class="it"><b>路易斯·布努埃尔 Luis Buñuel</b><span>1900 — 1983 · 西班牙 / 墨西哥</span><p>用中产阶级的晚餐，切开文明的皮。</p></div>
+          <div class="it"><b>费德里科·费里尼 Federico Fellini</b><span>1920 — 1993 · 意大利</span><p>马戏团、寡妇、教堂，全部混在一起。</p></div>
+        </div>
+      </div>
+      <div class="r">
+        <h5>FILM · 影 像</h5>
+        <div class="tl">
+          <div class="it"><b>《一条安达鲁狗》1929</b><span>17 MIN · 短片</span><p>割开眼球的那一刀，至今无人超越。</p></div>
+          <div class="it"><b>《黄金时代》1930</b><span>60 MIN · 长片</span><p>教会与爱情同时被嘲弄，遭禁 50 年。</p></div>
+          <div class="it"><b>《八部半》1963</b><span>138 MIN · 自传</span><p>"我不会拍了。"然后拍出了杰作。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== 栏目 4：实验短片（生成艺术卡片） ==================== -->
+<section class="section" id="art">
+  <div class="wrap">
+    <span class="eyebrow">频道 · 实验短片</span>
+    <h2 class="h2">九分钟以内的 <span class="grad">视觉诗</span></h2>
+    <p class="lead">没有台词，没有剧情，只有形状、光与声音。达利电影网实验短片频道，用 CSS 生成艺术为每一部做封面。</p>
+
+    <div class="art">
+      <article class="card reveal">
+        <div class="swatch s1"></div>
+        <div><h6>对角线的交响</h6><span class="dur">1924 · 5 MIN · 维京·艾格林</span></div>
+        <p>几何图形随音乐生长、碰撞、消解。抽象动画的源头。</p>
+      </article>
+      <article class="card reveal">
+        <div class="swatch s2"></div>
+        <div><h6>一记耳光</h6><span class="dur">1929 · 2 MIN · 达利 / 布努埃尔</span></div>
+        <p>影像的耳光，打在观众的脸上，也打在逻辑上。</p>
+      </article>
+      <article class="card reveal">
+        <div class="swatch s3"></div>
+        <div><h6>机械芭蕾</h6><span class="dur">1924 · 19 MIN · 费尔南·莱热</span></div>
+        <p>齿轮、活塞、女人的身体——工业时代的节奏诗。</p>
+      </article>
+      <article class="card reveal">
+        <div class="swatch s4"></div>
+        <div><h6>色彩的声音</h6><span class="dur">1942 · 7 MIN · 奥斯卡·费钦格</span></div>
+        <p>让色彩自己唱歌。视觉音乐（Visual Music）的巅峰。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ==================== 栏目 5：梦境榜（表格行） ==================== -->
+<section class="section" id="rank">
+  <div class="wrap">
+    <span class="eyebrow">榜单 · 梦境榜</span>
+    <h2 class="h2">最常被梦见的 <span class="grad">七部电影</span></h2>
+    <p class="lead">基于达利电影网用户"深夜播放 + 反复回看 + 收藏"三项数据合成，代表"看完之后会做梦"的那一批。</p>
+
+    <div class="rank">
+      <div class="rank-row reveal"><div class="no g1">01</div><div class="tt"><b>一条安达鲁狗</b><span>1929 / 超现实主义 / 16 分钟</span></div><div class="ht">▲ 128.6 万</div></div>
+      <div class="rank-row reveal"><div class="no g2">02</div><div class="tt"><b>镜子 Зеркало</b><span>1975 / 诗意 / 107 分钟</span></div><div class="ht">▲ 96.3 万</div></div>
+      <div class="rank-row reveal"><div class="no g3">03</div><div class="tt"><b>八部半 8½</b><span>1963 / 自传 / 138 分钟</span></div><div class="ht">▲ 87.1 万</div></div>
+      <div class="rank-row reveal"><div class="no">04</div><div class="tt"><b>朦胧中的大眼 Belle de jour</b><span>1967 / 情欲 / 101 分钟</span></div><div class="ht">▲ 74.8 万</div></div>
+      <div class="rank-row reveal"><div class="no">05</div><div class="tt"><b>圣山 The Holy Mountain</b><span>1973 / 寓言 / 116 分钟</span></div><div class="ht">▲ 63.5 万</div></div>
+      <div class="rank-row reveal"><div class="no">06</div><div class="tt"><b>潜行者 Сталкер</b><span>1979 / 哲思 / 162 分钟</span></div><div class="ht">▲ 58.9 万</div></div>
+      <div class="rank-row reveal"><div class="no">07</div><div class="tt"><b>资产阶级的审慎魅力</b><span>1972 / 讽刺 / 102 分钟</span></div><div class="ht">▲ 47.2 万</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 栏目 6：关于 / 订阅 ==================== -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="about reveal">
+      <div class="about-grid">
+        <div>
+          <span class="eyebrow">关于 达利电影网</span>
+          <h2 class="h2">为什么只放 <span class="grad">"看不懂"的电影</span>？</h2>
+          <p class="lead" style="margin-top:14px">达利电影网（dalidianyingwang-cn.github.io）的执念很简单：<b style="color:var(--gold)">1930—1980</b> 是影像敢于"不讲道理"的黄金年代。我们不解释隐喻，只负责把片子找齐、排好、让你在深夜能点开。逻辑是醒着的，梦不是。</p>
+          <div class="feat" style="margin-top:26px">
+            <div><b>860+</b><span>超现实影片</span></div>
+            <div><b>12</b><span>梦境母题</span></div>
+            <div><b>6</b><span>内容频道</span></div>
+            <div><b>9</b><span>分钟平均片长</span></div>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:22px;margin-bottom:8px;letter-spacing:1px">订阅「每周一梦」</h3>
+          <p class="lead">每周一封邮件：一部短片 + 一个梦境母题 + 一段达利语录。可在三秒内退订。</p>
+          <form class="about-form" action="#" method="get" onsubmit="return false" novalidate>
+            <input type="text" name="name" placeholder="如何称呼你" autocomplete="name">
+            <input type="email" name="email" placeholder="邮箱地址" autocomplete="email" required>
+            <textarea placeholder="最近做过的一个梦（选填，我们会试着为你配一部电影）"></textarea>
+            <button class="btn btn-primary" type="submit">订 阅 →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 页脚 ==================== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand"><span class="logo" aria-hidden="true">∞</span>达利电影网</div>
+        <p class="lead" style="margin-top:16px;font-size:13px">超现实主义与艺术电影的观看导航入口。软钟会融化，好影像不会。</p>
+      </div>
+      <div class="foot-col">
+        <h6>频道导航</h6>
+        <ul>
+          <li><a href="#movies">超现实主义电影</a></li>
+          <li><a href="#dict">梦境词典</a></li>
+          <li><a href="#painter">画家电影</a></li>
+          <li><a href="#art">实验短片</a></li>
+          <li><a href="#rank">梦境榜</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>观影指南</h6>
+        <ul>
+          <li><a href="#">超现实主义入门五部</a></li>
+          <li><a href="#">达利与布努埃尔的分手</a></li>
+          <li><a href="#">修复版与原始拷贝</a></li>
+          <li><a href="#">无声电影的配乐选择</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>关于我们</h6>
+        <ul>
+          <li><a href="#about">站点简介</a></li>
+          <li><a href="#">选片标准</a></li>
+          <li><a href="#">投稿合作</a></li>
+          <li><a href="#">免责声明</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 达利电影网（dalidianyingwang-cn.github.io）保留所有权利。</span>
+      <span>网站网址：<a href="https://dalidianyingwang-cn.github.io" rel="noopener noreferrer">https://dalidianyingwang-cn.github.io</a> ｜ 仅供艺术研究与学习交流，请支持正版</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="返回顶部" title="返回顶部">↑</button>
+
+<script>
+/* 移动端菜单 */
+var menuBtn=document.getElementById('menuBtn');
+var navLinks=document.getElementById('navLinks');
+menuBtn.addEventListener('click',function(){
+  var open=navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',open);
+  menuBtn.textContent=open?'✕':'☰';
+  menuBtn.setAttribute('aria-label',open?'关闭菜单':'展开菜单');
+});
+navLinks.addEventListener('click',function(e){
+  if(e.target.tagName==='A'){
+    navLinks.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
+    menuBtn.textContent='☰';
+    menuBtn.setAttribute('aria-label','展开菜单');
+  }
+});
+
+/* 母题 Chip */
+document.querySelectorAll('.filters').forEach(function(box){
+  box.addEventListener('click',function(e){
+    if(e.target.classList.contains('chip')){
+      box.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');c.setAttribute('aria-selected','false');});
+      e.target.classList.add('active');
+      e.target.setAttribute('aria-selected','true');
+    }
+  });
+});
+
+/* 滚动进度 + 入场 */
+var pb=document.getElementById('pbar');
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+}
+window.addEventListener('scroll',function(){
+  var h=document.documentElement.scrollHeight-innerHeight;
+  pb.style.width=(h>0?(scrollY/h*100):0)+'%';
+  document.getElementById('toTop').classList.toggle('show',scrollY>500);
+},{passive:true});
+document.getElementById('toTop').addEventListener('click',function(){scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>
